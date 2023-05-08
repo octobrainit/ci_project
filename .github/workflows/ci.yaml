@@ -17,4 +17,13 @@ jobs:
           go-version: ${{ matrix.go }}
       - run: go test
       - run: go run math.go
-
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        id: docker_build_application
+        uses: docker/build-push-action@v4
+        with:
+          push: false
+          tags: xpto1/app_go_ci:latest
